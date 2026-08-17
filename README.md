@@ -1,0 +1,2 @@
+# plataforma
+sistema operacional territorial

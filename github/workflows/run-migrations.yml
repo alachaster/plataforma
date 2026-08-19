@@ -1,0 +1,24 @@
+name: Run production migrations
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  migrate:
+    name: Run DB migrations (production)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+      - name: Install dependencies
+        run: npm ci
+      - name: Run migrations
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          # adicione aqui outras variáveis necessárias (ex: AWS_ACCESS_KEY_ID, etc)
+        run: npm run db:migrate
